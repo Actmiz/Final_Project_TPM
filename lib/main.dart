@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:project_akhir_tpm/screen/search_screen.dart';
 import 'screen/home_screen.dart';
 import 'screen/login_screen.dart';
 import 'screen/register_screen.dart';
@@ -13,11 +14,11 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ThemeData().colorScheme.copyWith(
               background:
-                  Color.fromARGB(255, 11, 31, 46), // Warna latar belakang
+                  Color.fromARGB(255, 172, 225, 175), // Warna latar belakang
             ),
         appBarTheme: AppBarTheme(
           titleTextStyle: TextStyle(color: Colors.white, fontSize: 25),
-          backgroundColor: Color.fromARGB(255, 11, 31, 46), // Warna AppBar
+          backgroundColor: Color.fromARGB(255, 172, 225, 175), // Warna AppBar
         ),
         primarySwatch: Colors.blue,
         textTheme: ThemeData().textTheme.apply(
