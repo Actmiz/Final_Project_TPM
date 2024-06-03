@@ -2,10 +2,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:project_akhir_tpm/screen/login_screen.dart';
+import 'package:project_akhir_tpm/screen/notif_screen.dart';
+import 'package:project_akhir_tpm/screen/product_screen.dart';
 import '../models/model.dart';
 import '../services/api_service.dart';
 import '../services/sharedpref.dart';
-import 'profile_screen.dart'; // Import your profile screen file
+import 'cart_screen.dart'; // Import CartScreen
+import 'profile_screen.dart'; // Import ProfileScreen
 
 class MainScreen extends StatefulWidget {
   @override
@@ -18,6 +21,8 @@ class _MainScreenState extends State<MainScreen> {
   PageController _pageController = PageController();
   List<Product> _searchResults = [];
   ApiService _apiService = ApiService(); // Inisialisasi ApiService
+  List<Product> _cartItems = [];
+  List<String> _notifications = [];
 
   Future<void> _searchProducts(String query) async {
     List<Product> results = await _apiService.searchProducts(query);
@@ -32,6 +37,18 @@ class _MainScreenState extends State<MainScreen> {
       _pageController.animateToPage(index,
           duration: Duration(milliseconds: 300), curve: Curves.ease);
     });
+  }
+
+  void _addToCart(Product product) {
+    setState(() {
+      _cartItems.add(product);
+      _notifications.add('${product.title} berhasil ditambahkan ke keranjang!');
+    });
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('${product.title} berhasil ditambahkan ke keranjang!'),
+      ),
+    );
   }
 
   @override
@@ -64,7 +81,11 @@ class _MainScreenState extends State<MainScreen> {
             icon: Icon(Icons.shopping_cart,
                 color: Color.fromARGB(255, 255, 255, 255)),
             onPressed: () {
-              // Tambahkan logika untuk menampilkan chart di sini
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => CartScreen(cartItems: _cartItems)),
+              );
             },
           ),
         ],
@@ -77,12 +98,11 @@ class _MainScreenState extends State<MainScreen> {
           });
         },
         children: <Widget>[
-          // Tambahkan halaman yang sesuai di sini
-          Center(child: Text('Products Page')),
+          ProductGrid(addToCart: _addToCart),
           Center(child: Text('Promo Page')),
           _buildSearchResults(),
-          Center(child: Text('Notifications Page')),
-          Center(child: Text('Profile Page')),
+          NotifScreen(notifications: _notifications),
+          ProfileScreen(),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
