@@ -11,19 +11,21 @@ class CartScreen extends StatefulWidget {
 }
 
 class _CartScreenState extends State<CartScreen> {
-  late int totalPrice = 0;
-  Map<int, int> quantityMap = {}; // Map untuk menyimpan jumlah item per id
+  late double totalPrice = 0;
+  Map<int, int> quantityMap = {};
 
   @override
   void initState() {
     super.initState();
+    quantityMap =
+        widget.cartItems.fold({}, (map, product) => map..[product.id] = 1);
     _calculateTotalPrice();
   }
 
   void _calculateTotalPrice() {
-    int sum = 0;
+    double sum = 0;
     widget.cartItems.forEach((product) {
-      int quantity = quantityMap[product.id] ?? 1; // Default quantity = 1
+      int quantity = quantityMap[product.id] ?? 1;
       sum += product.price * quantity;
     });
     setState(() {
@@ -34,24 +36,22 @@ class _CartScreenState extends State<CartScreen> {
   void _checkout() {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text('Checkout berhasil!'),
+        content: Text('Checkout berhasil'),
       ),
     );
   }
 
   void _incrementItem(int productId) {
     setState(() {
-      quantityMap.update(productId, (value) => value + 1,
-          ifAbsent: () => 1); // Tambah 1 ke jumlah item
+      quantityMap.update(productId, (value) => value + 1, ifAbsent: () => 1);
       _calculateTotalPrice();
     });
   }
 
   void _decrementItem(int productId) {
     setState(() {
-      if (quantityMap[productId]! > 1) {
-        quantityMap.update(productId,
-            (value) => value - 1); // Kurangi 1 dari jumlah item, minimal 1
+      if (quantityMap[productId] != null && quantityMap[productId]! > 1) {
+        quantityMap.update(productId, (value) => value - 1);
         _calculateTotalPrice();
       }
     });
@@ -70,12 +70,12 @@ class _CartScreenState extends State<CartScreen> {
               itemCount: widget.cartItems.length,
               itemBuilder: (context, index) {
                 Product product = widget.cartItems[index];
-                int quantity =
-                    quantityMap[product.id] ?? 1; // Ambil jumlah item dari Map
+                int quantity = quantityMap[product.id] ?? 1;
                 return ListTile(
                   leading: Image.network(
-                    product.images[0],
-                    width: 50,
+                    product.image[0],
+                    width: 150,
+                    height: 150,
                     fit: BoxFit.cover,
                   ),
                   title: Text(product.title),

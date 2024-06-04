@@ -4,7 +4,7 @@ import '../models/model.dart';
 
 class ApiService {
   Future<List<Product>> fetchProducts() async {
-    final Uri url = Uri.parse('https://api.escuelajs.co/api/v1/products');
+    final Uri url = Uri.parse('https://fakestoreapi.com/products/');
     final response = await http.get(url);
 
     if (response.statusCode == 200) {
@@ -16,8 +16,7 @@ class ApiService {
   }
 
   Future<List<Product>> searchProducts(String query) async {
-    final Uri url =
-        Uri.parse('https://api.escuelajs.co/api/v1/products?q=$query');
+    final Uri url = Uri.parse('https://fakestoreapi.com/products?q=$query');
     final response = await http.get(url);
 
     if (response.statusCode == 200) {

@@ -1,22 +1,16 @@
 class Product {
   final int id;
   final String title;
-  final int price;
+  final double price;
   final String description;
-  final List<String> images;
-  final DateTime createdAt;
-  final DateTime updatedAt;
-  final Category category;
+  final String image;
 
   Product({
     required this.id,
     required this.title,
     required this.price,
     required this.description,
-    required this.images,
-    required this.createdAt,
-    required this.updatedAt,
-    required this.category,
+    required this.image,
   });
 
   factory Product.fromJson(Map<String, dynamic> json) {
@@ -25,10 +19,24 @@ class Product {
       title: json['title'],
       price: json['price'],
       description: json['description'],
-      images: List<String>.from(json['images']),
-      createdAt: DateTime.parse(json['creationAt']),
-      updatedAt: DateTime.parse(json['updatedAt']),
-      category: Category.fromJson(json['category']),
+      image: json['image'],
+    );
+  }
+}
+
+class ratingProduct {
+  final double rate;
+  final int count;
+
+  ratingProduct({
+    required this.rate,
+    required this.count,
+  });
+
+  factory ratingProduct.fromJson(Map<String, dynamic> json) {
+    return ratingProduct(
+      rate: json['rate'],
+      count: json['count'],
     );
   }
 }

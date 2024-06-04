@@ -43,8 +43,6 @@ class _ProductGridState extends State<ProductGrid> {
             ),
             itemCount: products.length,
             itemBuilder: (context, index) {
-              String imageUrl = _getValidImageUrl(products[index].images);
-
               return Card(
                 color: Color(0xFF7AA37D), // Set background color of the card
                 elevation: 5,
@@ -54,7 +52,7 @@ class _ProductGridState extends State<ProductGrid> {
                   children: [
                     Expanded(
                       child: Image.network(
-                        imageUrl,
+                        products[index].image,
                         fit: BoxFit.cover,
                         width: double.infinity,
                         errorBuilder: (context, error, stackTrace) {
