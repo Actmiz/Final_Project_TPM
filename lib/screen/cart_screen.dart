@@ -73,9 +73,7 @@ class _CartScreenState extends State<CartScreen> {
                 int quantity = quantityMap[product.id] ?? 1;
                 return ListTile(
                   leading: Image.network(
-                    product.image[0],
-                    width: 150,
-                    height: 150,
+                    product.image,
                     fit: BoxFit.cover,
                   ),
                   title: Text(product.title),

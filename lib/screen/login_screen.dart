@@ -27,6 +27,10 @@ class _LoginScreenState extends State<LoginScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            Image.asset('/images/Logo.png', width: 300, height: 300),
+            SizedBox(
+              height: 30,
+            ),
             TextField(
               controller: _emailController,
               decoration: InputDecoration(labelText: 'Email'),
